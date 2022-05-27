@@ -38,7 +38,7 @@ const routes = async(req, res) => {
       errorHandle(res, 400, "無此筆資料");
     }
   }else if(url.startsWith("/posts") && method == "PATCH"){
-    req.on("end", () => postsControllers.createPosts({ body, req, res }));
+    req.on("end", () => postsControllers.updatePosts(body, req, res));
   }else if(method == "OPTIONS"){
     httpControllers.cors(req, res);
   }else{

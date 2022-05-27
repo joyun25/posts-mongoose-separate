@@ -6,7 +6,7 @@ const posts = {
     const allPosts = await Post.find();
     successHandle(res, allPosts);
   },
-  async createPosts({ body, req, res }) {
+  async updatePosts({ body, req, res }) {
     try{
       const id = req.url.split("/").pop();
       if (await Post.findById(`${id}`) !== null){
