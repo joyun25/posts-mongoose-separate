@@ -23,12 +23,16 @@ const posts = {
     successHandle(res, Post);
   },
   async deleteOnePost({ req, res }) {
-    const id = url.split("/").pop();
-    if (await Post.findById(`${id}`) !== null){
-      await Post.findByIdAndDelete(`${id}`);
-      successHandle(res, "刪除成功");
-    }else{
-      errorHandle(res, 400, "無此筆資料");
+    try{
+      const id = url.split("/").pop();
+      if (await Post.findById(`${id}`) !== null){
+        await Post.findByIdAndDelete(`${id}`);
+        successHandle(res, "刪除成功");
+      }else{
+        errorHandle(res, 400, "無此筆資料");
+      }
+    }catch(err){
+      console.log(err);
     }
   },
   async updatePosts({ body, req, res }) {
