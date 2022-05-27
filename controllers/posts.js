@@ -6,6 +6,31 @@ const posts = {
     const allPosts = await Post.find();
     successHandle(res, allPosts);
   },
+  async createPosts({ body, req, res }) {
+    try{
+      const data = JSON.parse(body);
+      const newPost = await Post.create({
+        name: data.name,
+        content: data.content
+      });
+      successHandle(res, newPost);
+    }catch(err){
+      errorHandle(res, 400, err.message);
+    }
+  },
+  async deleteAllPosts({ req, res }) {
+    await Post.deleteMany({});
+    successHandle(res, Post);
+  },
+  async deleteOnePost({ req, res }) {
+    const id = url.split("/").pop();
+    if (await Post.findById(`${id}`) !== null){
+      await Post.findByIdAndDelete(`${id}`);
+      successHandle(res, "刪除成功");
+    }else{
+      errorHandle(res, 400, "無此筆資料");
+    }
+  },
   async updatePosts({ body, req, res }) {
     try{
       const id = req.url.split("/").pop();
