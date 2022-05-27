@@ -24,7 +24,7 @@ const posts = {
   },
   async deleteOnePost({ req, res }) {
     try{
-      const id = url.split("/").pop();
+      const id = req.url.split("/").pop();
       if (await Post.findById(`${id}`) !== null){
         await Post.findByIdAndDelete(`${id}`);
         successHandle(res, "刪除成功");
